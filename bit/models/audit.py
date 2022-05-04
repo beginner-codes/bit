@@ -12,4 +12,4 @@ class Audit(Base):
     code_id = Column(Integer, nullable=True)
     file_id = Column(Integer, nullable=True)
     user_id = Column(Integer, nullable=True)
-    when = Column(DateTime, nullable=False, server_default=func.now)
+    when = Column(DateTime, nullable=False, server_default=func.now())

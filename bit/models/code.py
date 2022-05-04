@@ -8,4 +8,4 @@ class Code(Base):
     id = Column(Integer, primary_key=True)
     code = Column(Unicode(2**14), nullable=False)
     file_id = Column(Integer, nullable=False)
-    created = Column(DateTime, nullable=False, server_default=func.now)
+    created = Column(DateTime, nullable=False, server_default=func.now())
