@@ -16,6 +16,7 @@ class Settings(BaseSettings):
 
 @cache
 def open_config(*paths: Path) -> Settings:
+def load_config(*paths: Path) -> Settings:
     settings = {}
     for path in paths:
         try:
