@@ -7,6 +7,7 @@ import json
 class Settings(BaseSettings):
     JWT_SECRET: str = "secret"
     JWT_ALGORITHM: str = "HS256"
+    DEV: bool = False
 
     class Config:
         extra = Extra.allow
@@ -14,7 +15,13 @@ class Settings(BaseSettings):
 
 
 @cache
-def open_config(path: Path) -> Settings:
-    print("Loading file")
-    with path.open("r") as file:
-        return Settings(**json.load(file))
+def open_config(*paths: Path) -> Settings:
+    settings = {}
+    for path in paths:
+        try:
+            with path.open("r") as file:
+                settings |= json.load(file)
+        except FileNotFoundError:
+            pass
+
+    return Settings(**settings)
