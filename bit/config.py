@@ -4,6 +4,10 @@ from functools import cache
 import json
 
 
+PROJECT_ROOT = Path(__file__).parent.parent
+DEFAULT_PATHS = (PROJECT_ROOT / "settings.json", PROJECT_ROOT / "settings.dev.json")
+
+
 class Settings(BaseSettings):
     JWT_SECRET: str = "secret"
     JWT_ALGORITHM: str = "HS256"
@@ -15,8 +19,12 @@ class Settings(BaseSettings):
 
 
 @cache
-def open_config(*paths: Path) -> Settings:
 def load_config(*paths: Path) -> Settings:
+    settings = load_settings(*paths or DEFAULT_PATHS)
+    return Settings(**settings)
+
+
+def load_settings(*paths: Path) -> dict:
     settings = {}
     for path in paths:
         try:
@@ -25,4 +33,4 @@ def load_config(*paths: Path) -> Settings:
         except FileNotFoundError:
             pass
 
-    return Settings(**settings)
+    return settings
