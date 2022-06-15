@@ -1,5 +1,6 @@
 from sqlalchemy import Column, Integer, Unicode, DateTime
 from sqlalchemy.sql import func
+
 from bit.models.base import Base
 
 

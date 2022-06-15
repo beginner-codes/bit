@@ -1,17 +1,17 @@
-from pathlib import Path
-from pydantic import BaseSettings, Extra
-from functools import cache
 import json
+from functools import cache
+from pathlib import Path
 
+from pydantic import BaseSettings, Extra
 
 PROJECT_ROOT = Path(__file__).parent.parent
-DEFAULT_PATHS = (PROJECT_ROOT / "settings.json", PROJECT_ROOT / "settings.dev.json")
 
 
 class Settings(BaseSettings):
     JWT_SECRET: str = "secret"
     JWT_ALGORITHM: str = "HS256"
     DEV: bool = False
+    db_uri: str = "sqlite+aiosqlite:///"
 
     class Config:
         extra = Extra.allow
@@ -19,8 +19,10 @@ class Settings(BaseSettings):
 
 
 @cache
-def load_config(*paths: Path) -> Settings:
-    settings = load_settings(*paths or DEFAULT_PATHS)
+def load_config() -> Settings:
+    settings = load_settings(
+        PROJECT_ROOT / "settings.json", PROJECT_ROOT / "settings.dev.json"
+    )
     return Settings(**settings)
 
 

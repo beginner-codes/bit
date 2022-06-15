@@ -1,4 +1,5 @@
 from bit.models.audit import Audit
+from bit.models.base import Base
 from bit.models.bit import Bit
 from bit.models.code import Code
 from bit.models.file import File
