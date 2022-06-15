@@ -1,4 +1,6 @@
-from sqlalchemy.orm import declarative_base as _declarative_base
+from sqlalchemy.orm import as_declarative as _as_declarative
 
-Base = _declarative_base()
-Base.__mapper_args__ = {"eager_defaults": True}
+
+@_as_declarative()
+class Base:
+    __mapper_args__ = {"eager_defaults": True}
